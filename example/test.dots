@@ -1,0 +1,6 @@
+keyword hi
+code: """
+char* hi() { return "Hello from memory!"; }
+"""
+
+run_print("hi")
