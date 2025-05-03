@@ -102,7 +102,41 @@ list()
 
 ------
 
-## Philosophy
+
+
+### 6. Behavior Persistence Tips
+
+- **The first time you run a script**, all `keyword` and `code` blocks must be fully written in the file—just like in the example script above.  
+  This allows Dots to compile and remember each behavior via `.so` files and `.keywords.mem`.
+- **After the first run**, you can simplify future scripts by only writing:
+
+```dots
+run("add")
+run_print("hi")
+```
+
+Dots will automatically recover the definitions and run the remembered behavior.
+
+> In other words: **define once, call forever.**
+
+### 7. How to Run Scripts
+
+- All script content (including `keyword`, `code`, and `run()` commands) must be written in a `.dots` file.
+- After compiling with `make`, you can execute the script using:
+
+```bash
+./dots_lang your_script.dots
+```
+
+For example:
+
+```bash
+./dots_lang example.dots
+```
+
+This will trigger Dots to compile, load, and execute all defined behaviors within the script.
+
+## 
 
 > Programming is behavior. Language is memory.
 
