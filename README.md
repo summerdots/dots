@@ -1,10 +1,9 @@
-
 # Dots Programming Language (MVP)
 
 **Dots** is a minimalist, self-bootstrapping programming core written in C. It defines language as a set of behaviors—registered, remembered, and executed at runtime.  
 *Language is behavior.*
 
----
+------
 
 ## Features
 
@@ -18,7 +17,7 @@
 
 > Both `.keywords.mem` and `.so` files are automatically created during execution. No manual preparation required.
 
----
+------
 
 ## Build & Run
 
@@ -40,77 +39,68 @@ This will compile all files into an executable named `dots`.
 gcc -Wall -fPIC main.c start.c interpreter.c keyword.c keywordlist.c photolist.c -ldl -o dots_lang
 ```
 
----
+------
 
-## Executing Scripts
+## Usage (Dots Script Syntax v0.1)
 
-To run a `.dots` script:
+Dots is a behavior-driven scripting language. Its core mechanism revolves around registering functions using `keyword` blocks, and executing them via `run()` or `run_print()`.
 
-```bash
-./dots_lang example.dots
-```
+### 1. Basic Structure
 
-Example script:
+A Dots script consists of one or more `keyword` blocks. Each block includes:
 
-```dots
-keyword("add", "add.c");
-run("add");
-run_print("add");
-```
+- A function name (keyword)
+- A C function definition enclosed in triple quotes (code)
 
----
+Supported runtime actions include executing functions, printing results, and listing behaviors.
 
-
-
-## Example
-
-A working demonstration is available in the [`example/`](./example) folder.  
-It includes:
-
-- A sample `.dots` script
-- A C source code block registered as behavior using triple quotes
-- A runtime output screenshot
-
-To run a `.dots` script:
-
-```bash
-./dots_lang example.dots
-```
-
-Example script:
+### 2. Example Script
 
 ```dots
 keyword hi
-code: """char* hi() { return "Hello from memory!"; }"""
+code: """
+char* hi() { return "Hello from memory!"; }
+"""
 
-run_print("hi")
-```
-
-> Note: In the current version of Dots, C code must be written in a **single line inside triple quotes** due to parser limitations.
-
-
-### Advanced Script Format Notes
-
-Dots currently supports multiline C code blocks using triple-quoted strings.  
-To ensure correct parsing, please follow these rules:
-
-1. The line that starts with `code:` must be immediately followed by a line containing only triple quotes.  
-2. The code block must be cleanly formatted (avoid Windows-style \r\n or mixed encodings).  
-3. The closing triple quotes must also be on their own line, not combined with a return or brace.
-
-**Example:**
-```dots
-keyword hi
-code: """ 
-char* hi() {
-    return "Hello, Dots!";
-}
+keyword add
+code: """
+int add(int a, int b) { return a + b; }
 """
 
 run_print("hi")
+run("add", 7, 5)
+list()
 ```
 
+### 3. Semantic Reference
 
+- `keyword NAME`  
+  Registers a new function named `NAME`. Must be followed by a `code:` block.
+- `code: """ ... """`  
+  Encloses a standard C function. No `main()` function required.
+  - `char* hi()` is used with `run_print()` (returns string)
+  - `int add(int, int)` is used with `run()` (returns integer)
+- `run("name", a, b)`  
+  Calls an integer-returning function with two integer parameters.
+- `run_print("name")`  
+  Calls a string-returning function and prints the result.
+- `list()`  
+  Lists all registered functions, including those restored from `.keywords.mem`.
+
+### 4. Memory System
+
+- All `keyword` definitions are saved to `.keywords.mem`;
+- On next startup, Dots will automatically restore the functions and recompile them;
+- Behaviors are remembered permanently, even across sessions.
+
+### 5. Style Recommendations
+
+- Separate each `keyword` block with a blank line;
+- Use commas to separate parameters;
+- Scripts must use the `.dots` extension;
+- Use `main.dots` or `test.dots` as primary entry scripts.
+
+------
 
 ## Philosophy
 
@@ -125,13 +115,13 @@ In Dots, there is no `main()`. Instead, programs begin with `start()`, reflectin
 > **Language is behavior. But one day, language must become machine code.**  
 > Machines should adapt to human intent—not the other way around.
 
----
+------
 
 Dots may be poorly written—even broken.  
 But it realizes its core idea: **language is behavior**.  
 You can laugh at it—then go write something better.
 
----
+------
 
 ## Author
 
@@ -141,14 +131,14 @@ Self-taught programmer with a focus on systems, language design, and the philoso
 
 > May the dots you connect today change the world tomorrow.
 
----
+------
 
 **This might be poorly written. It might even be broken.**  
 But it works, and it dares to say: *language is behavior.*  
 So go ahead — fork it, fight it, fix it.  
 Or build your own version that runs better and thinks deeper.
 
----
+------
 
 **This language isn’t written very well. It’s probably a bit messy.**  
 But it runs, and it tries to say something simple: **language is behavior.**
