@@ -1,10 +1,13 @@
-// File: main.c
-// This is the real entry point that calls Dots' custom start() function.
 
-#include "start.h"
+#include "interpreter.h"
+#include "scriptlist.h"
+#include "memory.h"
+#include "builtin.h"
 
-int main(int argc, char** argv) {
-    return start(argc, argv);
+int main() {
+    init_scriptlist();
+    load_keywords();
+    register_builtin_keywords();
+    start_interpreter();
+    return 0;
 }
-
-

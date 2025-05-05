@@ -1,8 +1,8 @@
-#ifndef DOTS_INTERPRETER_H
-#define DOTS_INTERPRETER_H
 
-// Main interpreter entry point: run a .dots script
-void interpret(const char* filename);
+#ifndef INTERPRETER_H
+#define INTERPRETER_H
+
+void start_interpreter();
+int parse_command(const char* input);
 
 #endif
-
