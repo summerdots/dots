@@ -1,0 +1,38 @@
+start*: say_hello(name) {
+    print("Hello_world")
+}
+
+start*: do_math(x, y) {
+    add($x, $y)
+    sub($x, $y)
+    gt($x, $y)
+    lt($x, $y)
+}
+
+start*: test_logic(flag) {
+    if(flag) {
+        print("Flag is true.")
+    }
+    if("false") {
+        print("This should not be printed.")
+    }
+}
+
+start*: inspect() {
+    list()
+    explain("say_hello")
+    explain("add")
+}
+
+start*: main() {
+    print("Running full demo...")
+    say_hello()
+    do_math(42, 7)
+    test_logic("true")
+    inspect()
+    print("Demo complete.")
+}
+
+start*: start() {
+    main()
+}

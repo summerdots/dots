@@ -1,12 +1,35 @@
+# ==== Project Name ====
+TARGET = dots
+COMPILER = dotsc
 
-CC=gcc
-CFLAGS=-Wall -Wextra -O2 -fPIC
-OBJS=main.o interpreter.o scriptlist.o builtin.o memory.o instruction.o heart.o behaviortable.o
+# ==== Source Files ====
+SRC = src/main.c \
+      src/behavior.c \
+      src/executor.c \
+      src/builtin.c \
+      src/control.c \
+      src/lazy.c \
+      src/mathmod.c \
+      src/modio.c \
+      src/introspect.c
 
-all: dots
+# ==== Compiler Settings ====
+CC = gcc
+CFLAGS = -Wall -O2
 
-dots: $(OBJS)
-	$(CC) -o $@ $^
+# ==== Build Targets ====
+all: $(TARGET) $(COMPILER)
+
+$(TARGET): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(TARGET)
+
+$(COMPILER): dotsc.c
+	$(CC) $(CFLAGS) dotsc.c -o $(COMPILER)
+
+compile-example: $(COMPILER)
+	@mkdir -p modules
+	./$(COMPILER) examples/hello.dots
 
 clean:
-	rm -f *.o dots
+	rm -f $(TARGET) $(COMPILER)
+	rm -rf modules
